@@ -30,6 +30,10 @@ button {
 	border: solid black 0.5px;
 }
 
+h2 {
+	color: snow;
+}
+
 .card {
 	width: 100%;
 }
