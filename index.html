@@ -13,14 +13,17 @@
 		<link rel="stylesheet" href="index.css" />
 	</head>
 	<body>
-		<div class="container">
+		<header>
 			<button id="new-deck">New Deck</button>
-			<h2 class="result" id="result"></h2>
+			<h3 class="remaining-cards" id="remaining-cards"></h3>
+		</header>
+		<div class="container">
+			<h2 class="result" id="result">Game of War</h2>
 			<div class="cards" id="cards">
 				<div class="card-slot"></div>
 				<div class="card-slot"></div>
 			</div>
-			<button class="draw-btn" id="draw-btn">Draw</button>
+			<button class="draw-btn" id="draw-btn" disabled>Draw</button>
 		</div>
 
 		<script src="index.js"></script>
