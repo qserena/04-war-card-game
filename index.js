@@ -4,9 +4,13 @@ const newDeck = document.getElementById('new-deck')
 const cardsContainer = document.getElementById('cards')
 const drawCardBtn = document.getElementById('draw-btn')
 const result = document.getElementById('result')
+const computerScoreEl = document.getElementById('computer-score')
+const myScoreEl = document.getElementById('my-score')
 const remainingCardsEl = document.getElementById('remaining-cards')
 
 let remainingCards = ''
+let computerScore = 0
+let myScore = 0
 
 function handleClick() {
 	fetch('https://apis.scrimba.com/deckofcards/api/deck/new/shuffle/')
@@ -16,9 +20,12 @@ function handleClick() {
 			const slots = cardsContainer.children
 			slots[0].innerHTML = ``
 			slots[1].innerHTML = ``
-
+			computerScore = 0
+			myScore = 0
+			computerScoreEl.textContent = `Computer score: 0`
+			myScoreEl.textContent = `Your score: 0`
 			drawCardBtn.disabled = false
-			console.log(drawCardBtn)
+			result.textContent = `Game of War`
 			remainingCardsEl.innerText = `Remaining cards: 52`
 		})
 }
@@ -31,11 +38,23 @@ function drawCards() {
 		.then((data) => {
 			const slots = cardsContainer.children
 			remainingCards = data.remaining
+
 			remainingCardsEl.innerText = `Remaining cards: ${remainingCards}`
 			const card1 = data.cards[0]
 			const card2 = data.cards[1]
-			// console.log(data)
 			result.innerText = getWinner(card1, card2)
+
+			if (remainingCards === 0) {
+				drawCardBtn.disabled = true
+
+				if (computerScore > myScore) {
+					result.textContent = `Computer wins by ${computerScore} - ${myScore}!`
+				} else if (myScore > computerScore) {
+					result.textContent = `Congrats!!! You won by ${myScore} - ${computerScore}!`
+				} else {
+					result.textContent = `Game over! It's a tie game! ${computerScore} - ${myScore}!`
+				}
+			}
 
 			slots[0].innerHTML = `
             <img src='${card1.image}' class='card'/>
@@ -65,13 +84,14 @@ function getWinner(card1, card2) {
 	const index1 = cardValues.indexOf(card1.value)
 	const index2 = cardValues.indexOf(card2.value)
 	if (index1 > index2) {
-		// console.log('card1 wins!')
+		computerScore++
+		computerScoreEl.textContent = `Computer score: ${computerScore}`
 		return 'Computer wins!'
 	} else if (index2 > index1) {
-		// console.log('card2 wins!')
+		myScore++
+		myScoreEl.textContent = `My score: ${myScore}`
 		return 'You win!'
 	} else {
-		// console.log("It's a tie!")
 		return 'War!'
 	}
 }

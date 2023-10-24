@@ -51,9 +51,13 @@ button {
 	background-color: darkgreen;
 	width: 150px;
 	height: 210px;
-	margin: 40px;
+	margin: 20px;
 }
 
 .draw-btn {
 	margin-top: auto;
+}
+
+.draw-btn:disabled {
+	cursor: default;
 }
